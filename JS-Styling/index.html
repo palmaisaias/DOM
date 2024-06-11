@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Styling</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        #box {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: 10px;
+            border-radius: 20px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            text-align: center;
+            margin: 10px;
+        }
+        #hoverBox {
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+            text-align: center;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            border-radius: 20px;
+            margin: 10px;
+        }
+        #outputText {
+            font-size: 18px;
+            color: crimson;
+        }
+        .listItem {
+            padding: 10px;
+            margin-bottom: 5px;
+            margin-right: 75px;
+            background-color: lightgray;
+        }
+        .highlight {
+            background-color: rgba(180, 76, 104, 0.633) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div id="box" class="mb-3" onclick="changeColor()">I change colors when you click me :] </div>
+            <div id="hoverBox" class="mb-3" onmouseover="changeSize()" onmouseout="resetSize()">I grow and shrink...</div>
+        </div>
+        <input type="text" id="textInput" class="form-control mb-3" oninput="updateText()" placeholder="Type something funny...">
+        <div id="outputText" class="mb-3"></div>
+        <ul id="list" class="list-group">
+            <li class="list-group-item listItem" onclick="toggleHighlight(this)">I told my wife she was drawing her eyebrows too high. She looked surprised.</li>
+            <li class="list-group-item listItem" onclick="toggleHighlight(this)">Why don’t scientists trust atoms? Because they make up everything!</li>
+            <li class="list-group-item listItem" onclick="toggleHighlight(this)">I’m reading a book on anti-gravity. It’s impossible to put down!</li>
+        </ul>
+    </div>
+
+    <script>
+        // this function is called by the 'onclick' in the 'id=box' div
+        function changeColor() {
+            const box = document.getElementById('box');
+            const colors = ['blue', 'red', 'yellow', 'purple', 'green'];
+            const currentColor = box.style.backgroundColor;
+            // this formula is responsible for rotating the colors. it gives the variable 'newColor' its value. It pulls
+            // the index of the current color (originally set to green) plus 1 and then modulo that to the length of the array
+            // which in this case is 5, this is to make sure that when the color index of the currentColor reaches 4, subsequently 
+            // 1 will be added to it making it 5. At that point 5 % 5 equals 0, which becomes the index used to pull color.
+            const newColor = colors[(colors.indexOf(currentColor) + 1) % colors.length];
+            box.style.backgroundColor = newColor;
+        }
+
+        // on mouseover these are triggered, changing the scale and making the box 'grow'
+        function changeSize() {
+            const hoverBox = document.getElementById('hoverBox');
+            hoverBox.style.transform = 'scale(1.5)';
+        }
+
+        function resetSize() {
+            const hoverBox = document.getElementById('hoverBox');
+            hoverBox.style.transform = 'scale(1)';
+        }
+
+        function updateText() {
+            // takes the value of the input tag and outputs it in the div with the outputText id
+            // also styling keeps the output text colored red
+            const input = document.getElementById('textInput').value;
+            const output = document.getElementById('outputText');
+            output.textContent = input;
+        }
+
+        function toggleHighlight(element) {
+            // toggle is a built in method that does twp things when fed the 'element'. if the class is present, it removes it and
+            // if it isnt present then it adds. So all 3 bars will start light grey and when they are clicked, the .highlight
+            // class is added and they changed to whatever css parameters are assigned in that class
+            element.classList.toggle('highlight');
+        }
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
